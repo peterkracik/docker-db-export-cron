@@ -1,0 +1,21 @@
+image:
+  name: docker/compose:1.22.0 # update tag to whatever version you want to use.
+  entrypoint: ["/bin/sh", "-c"]
+
+services:
+  - docker:dind
+
+before_script:
+  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+
+build:
+  stage: build
+  script:
+    - version=`cat VERSION`
+    - echo version $version
+    - docker build --pull -t "$CI_REGISTRY_IMAGE" .
+    - docker tag "$CI_REGISTRY_IMAGE" "$CI_REGISTRY_IMAGE:$version"
+    - docker push "$CI_REGISTRY_IMAGE:$version"
+    - docker push "$CI_REGISTRY_IMAGE"
+  only:
+    - master
