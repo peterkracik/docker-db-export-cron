@@ -21,7 +21,6 @@ RUN mkdir -p ${EXPORT_PATH}
 # Run the cron every minute
 RUN echo '*  *  0  *  *    /usr/local/bin/export_db.sh' > /etc/crontabs/root
 
-
 WORKDIR ${EXPORT_PATH}
 
 CMD ["crond", "-f", "-d", "8"]
