@@ -11,18 +11,10 @@ before_script:
 build:
   stage: build
   script:
-    - version=`cat VERSION`
-    - echo version $version
     - docker build --pull -t "$CI_REGISTRY_IMAGE" .
-    - docker tag "$CI_REGISTRY_IMAGE" "$CI_REGISTRY_IMAGE:$version"
-    - docker push "$CI_REGISTRY_IMAGE:$version"
+    - docker tag "$CI_REGISTRY_IMAGE" "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME"
+    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME"
     - docker push "$CI_REGISTRY_IMAGE"
 
-  before_script:
-    - version=`cat VERSION`
-    - git tag -a $version -m ‘Version $version’
-    - git tag
-    - git push origin --tags
-    - echo done
   only:
-    - master
+    - tags
