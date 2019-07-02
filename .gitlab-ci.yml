@@ -19,7 +19,7 @@ build:
     - docker push "$CI_REGISTRY_IMAGE"
 
   after_script:
-    - version=`cat VERSION
+    - version=`cat VERSION`
     - git tag -a $version -m ‘Version $version’
     - git tag
     - git push origin --tags
