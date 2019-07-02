@@ -18,10 +18,11 @@ build:
     - docker push "$CI_REGISTRY_IMAGE:$version"
     - docker push "$CI_REGISTRY_IMAGE"
 
-  after_script:
+  before_script:
     - version=`cat VERSION`
     - git tag -a $version -m ‘Version $version’
     - git tag
     - git push origin --tags
+    - echo done
   only:
     - master
