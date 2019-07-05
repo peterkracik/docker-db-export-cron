@@ -1,12 +1,11 @@
-image:
-  name: docker/compose:1.22.0 # update tag to whatever version you want to use.
-  entrypoint: ["/bin/sh", "-c"]
-
+iimage: docker:latest
 services:
   - docker:dind
-
 before_script:
-  - echo -n Ao9vjTxJj9vcvfNNQtJ1 | docker login -u gitlab-ci-token --password-stdin https://registry.pk-dev.com/v2/
+  - docker info
+  - export
+
+  - echo -n $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin https://registry.pk-dev.com/v2/
   # - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
 
 build:
