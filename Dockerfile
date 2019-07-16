@@ -19,7 +19,7 @@ RUN chmod +x /usr/local/bin/export_db.sh
 RUN mkdir -p ${EXPORT_PATH}
 
 # Run the cron every minute
-RUN echo '0 1 * * *    /usr/local/bin/export_db.sh' > /etc/crontabs/root
+RUN echo '0 1 * * *    /usr/local/bin/export_db.sh >> /dev/stdout' > /etc/crontabs/root
 
 WORKDIR ${EXPORT_PATH}
 
